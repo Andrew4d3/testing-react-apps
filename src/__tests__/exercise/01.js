@@ -1,4 +1,5 @@
 // simple test with ReactDOM
+// 💯 use dispatchEvent
 // http://localhost:3000/counter
 
 import * as React from 'react'
@@ -25,8 +26,20 @@ test('counter increments and decrements when the buttons are clicked', () => {
   const message = div.firstChild.querySelector('div')
 
   expect(message.textContent).toBe('Current count: 0')
-  act(() => increment.click())
+  const incrementClickEvent = new MouseEvent('click', {
+    bubbles: true,
+    cancelable: true,
+    button: 0,
+  })
+  act(() => increment.dispatchEvent(incrementClickEvent))
   expect(message.textContent).toBe('Current count: 1')
-  act(() => decrement.click())
+  const decrementClickEvent = new MouseEvent('click', {
+    bubbles: true,
+    cancelable: true,
+    button: 0,
+  })
+  act(() => decrement.dispatchEvent(decrementClickEvent))
   expect(message.textContent).toBe('Current count: 0')
 })
+
+// TODO watch video 159
