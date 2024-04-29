@@ -1,4 +1,5 @@
 // simple test with React Testing Library
+// 💯 use @testing-library/jest-dom
 // http://localhost:3000/counter
 
 import * as React from 'react'
@@ -10,9 +11,9 @@ test('counter increments and decrements when the buttons are clicked', () => {
   const [decrement, increment] = container.querySelectorAll('button')
   const message = container.firstChild.querySelector('div')
 
-  expect(message.textContent).toBe('Current count: 0')
+  expect(message).toHaveTextContent('Current count: 0')
   fireEvent.click(increment)
-  expect(message.textContent).toBe('Current count: 1')
+  expect(message).toHaveTextContent('Current count: 1')
   fireEvent.click(decrement)
-  expect(message.textContent).toBe('Current count: 0')
+  expect(message).toHaveTextContent('Current count: 0')
 })
