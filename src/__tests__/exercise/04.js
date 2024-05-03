@@ -7,19 +7,19 @@ import userEvent from '@testing-library/user-event'
 import Login from '../../components/login'
 import faker from 'faker'
 
+const { internet } = faker;
 
-const buildLoginForm =  () => ({
-  username: faker.internet.userName(),
-  password: faker.internet.password()
+const buildLoginForm =  ({ password =  internet.password(), username = internet.userName() }) => ({
+  username,
+  password,
 })
-
 
 test('submitting the form calls onSubmit with username and password', async () => {
   // 🐨 create a variable called "submittedData" and a handleSubmit function that
   // accepts the data and assigns submittedData to the data that was submitted
   // 💰 if you need a hand, here's what the handleSubmit function should do:
   // const handleSubmit = data => (submittedData = data)
-  const { username, password } = buildLoginForm()
+  const { username, password } = buildLoginForm({password: 'abc'})
   const handleSubmit = jest.fn();
   //
   // 🐨 render the login with your handleSubmit function as the onSubmit prop
