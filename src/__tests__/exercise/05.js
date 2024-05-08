@@ -1,5 +1,5 @@
 // mocking HTTP requests
-// 💯 reuse server request handlers
+// 💯 test the unhappy path
 // http://localhost:3000/login-submission
 
 import * as React from 'react'
@@ -33,4 +33,17 @@ test(`logging in displays the user's username`, async () => {
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i))
 
   expect(screen.getByText(username)).toBeInTheDocument()
+})
+
+test('omitting the password results in an error', async () => {
+  render(<Login />)
+  const {username} = buildLoginForm()
+
+  await userEvent.type(screen.getByLabelText(/username/i), username)
+  // don't type in the password
+  await userEvent.click(screen.getByRole('button', {name: /submit/i}))
+
+  await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i))
+
+  expect(screen.getByRole('alert')).toHaveTextContent('password required')
 })
